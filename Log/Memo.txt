@@ -1,0 +1,39 @@
+1.Google Cloud Platform
+root: hgobox.wh@gmail.com
+pwd: 0(8&6%4#
+
+root:harvey.zhang.gl@gmail.com
+pwd:1@3$5^7*
+
+2.Wifi 
+root: CMCC-ZHY-2.4G or CMCC-LY-5G
+pwd: zmkm20131111
+
+3.Email
+root: gulong@hgobox.com
+pwd: 201704Hgo
+
+4.DingDing
+group: https://h5.dingtalk.com/invite-page/index.html?code=a03dc95cc3
+
+5.GCP 
+# upload/download data
+gcloud init
+==>Enter choice 1 to choose [1] Re-initializaton this configuration
+==>Enter choice 1 to choose [1] hgobox.wh@gmail
+==>Enter choice 1 to choose [1] awesomw-gate-199701
+==>Enter Y to choose default region
+==>Enter 27 to choose asia-east-a
+gcloud compute instances list
+gcloud compute scp E:\\Download\\Pictures\\000.jpg hgobox_wh@instance-2:
+==>Specify file
+gcloud compute scp E:\\Download\\Pictures\\000.jpg hgobox_wh@instance-2:downloads
+gcloud compute scp hgobox_wh@instance-2:downloads/000.jpg E:\\Download\\Pictures\\000_test.jpg
+
+
+
+6.MaYun url
+https://gitee.com/hgobox/goods_dlts/invite_link?invite=6a7e66710d94341a28d2740b2ba09e35f87fe4ca742c95b6b7993663152babc59ee240ee8878008b
+https://gitee.com/hgobox/goods_dlts
+
+

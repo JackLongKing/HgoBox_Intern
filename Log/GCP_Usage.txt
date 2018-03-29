@@ -1,0 +1,72 @@
+1.GCP 
+# version information
+glcloud --version or gcloud -v
+# list detail information
+gcloud info
+# initialize or re-initialize
+gcloud init
+# GCP compute module command
+==>common format: gcloud compute GROUP| COMMAND [GCLOUD_WIDE_FLAG_]
+==>GROUP types:
+
+====>accelerator-types [list | describe]  # 查看Google Compute Engine加速器类型
+======>gcloud compute accelerator-types list
+======>gcloud compute accelerator-types describe [nvidia-tesla-p100 | nvidia-tesla-k80 | etc...]
+
+====>addresses [list | describe | create | delete]
+======>gcloud compute addresses list  
+
+====>disk-types [describe | list]  # 阅读Google Compute Engine虚拟磁盘类型
+======>gcloud compute disk-types list
+======>gcloud compute disk-types describe [pd-ssd | etc..]
+
+====>disks [add-labels | create | delete | describe | list | move | remove-labels | resize | snapshot | update]  # 阅读并操作Google Compute Engine磁​​盘
+======>gcloud compute disk list
+======>gcloud compute disk describe instance-2 # instance name
+
+====>health-checks [create | update | delete | describe | list]  # 阅读并操作负载均衡实例的运行状况检查
+======>gcloud compute health-checks list
+
+====>http-health-checks [create | delete | describe | list | update]  # 阅读并操作负载平衡实例的HTTP运行状况检查
+======>gcloud compute http-health-checks list
+
+====>https-health-checks [create | delete | describe | list | update]  # 阅读并处理负载均衡实例的HTTPS运行状况检查
+======>gcloud compute https-health-checks list
+
+====>images [add-labels | create | delete | deprecate | describe | describe-from-family | list | remove-labels | update]  # 列出，创建和删除Google Compute Engine操作系统镜像
+======>gcloud compute images list
+
+====>instance-groups [managed | unmanaged | describe | get-named-ports | list | list-instance | set-named-ports]  # 阅读并操作Google Compute Engine实例组
+======>gcloud compute instance-groups list
+
+====>instances [create | delete | update | describe | list | start | stop | etc...]  # 阅读并操作Google Compute Engine虚拟机实例
+=====>gcloud compute instances list
+=====>gcloud compute instances describe instance-2
+=====>gcloud compute instances start instance-2
+=====>gcloud compute instances stop instance-2
+=====>gcloud compute instances delete instance-2
+
+====>instance-templates [create | delete | describe | list]  # 阅读并操作Google Compute Engine实例模板
+=====>gcloud compute instance-templates list
+
+====>zones [list | describe]
+=====>gcloud compute zones list
+
+
+# upload/download data
+gcloud init
+==>Enter choice 1 to choose [1] Re-initialization this configuration
+==>Enter choice 1 to choose [1] hgobox.wh@gmail
+==>Enter choice 1 to choose [1] awesomw-gate-199701
+==>Enter Y to choose default region
+==>Enter 27 to choose asia-east-a
+gcloud compute instances list
+gcloud compute scp E:\\Download\\Pictures\\000.jpg hgobox_wh@instance-2:
+==>Specify file
+gcloud compute scp E:\\Download\\Pictures\\000.jpg hgobox_wh@instance-2:downloads
+gcloud compute scp hgobox_wh@instance-2:downloads/000.jpg E:\\Download\\Pictures\\000_test.jpg
+
+# Document URL
+https://cloud.google.com/sdk/gcloud/reference/compute/
+https://cloud.google.com/sdk/gcloud/
+

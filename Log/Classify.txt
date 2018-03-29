@@ -1,0 +1,21 @@
+===>百度狗识别大赛 细粒度
+https://www.cnblogs.com/hellocwh/p/7265995.html
+
+===>Residual-of-Residual-Networks
+https://github.com/titu1994/Residual-of-Residual-Networks
+
+===>Keras分类模型
+https://github.com/titu1994/Keras-Classification-Models
+
+===>Keras ResNeXt
+https://github.com/titu1994/Keras-ResNeXt
+
+===>keras model file
+https://pan.baidu.com/s/1dE9giOD#list/path=%2F&parentPath=%2FDeep-Learning
+https://github.com/fchollet/deep-learning-models/releases
+
+===>keras doc
+http://keras-cn.readthedocs.io/en/latest/other/application/
+
+===>keras doc and model
+https://pan.baidu.com/s/1geHmOpH#list/path=%2F&parentPath=%2F
