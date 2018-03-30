@@ -36,4 +36,6 @@ gcloud compute scp hgobox_wh@instance-2:downloads/000.jpg E:\\Download\\Pictures
 https://gitee.com/hgobox/goods_dlts/invite_link?invite=6a7e66710d94341a28d2740b2ba09e35f87fe4ca742c95b6b7993663152babc59ee240ee8878008b
 https://gitee.com/hgobox/goods_dlts
 
-
+7.Tencent Cloud Platform
+root：hhl@hgobox.com
+pwd：Kd_45-wi;y
