@@ -51,11 +51,12 @@ Element-wise sum         78.9
 Concat                   78.8
 
 <=============================================================================>
+=====>Title
+LocNet: Improving Localization Accuracy for Object Detection
+=====>Key Points
 
 
-
-
-
+=====>Result
 
 
 
