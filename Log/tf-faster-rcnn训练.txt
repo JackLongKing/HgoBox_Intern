@@ -56,6 +56,11 @@ A:对tf-faster-rcnn/tools下的demo.py进行修改。修改如下：
 5.调用格式：
 GPU_ID=0
 CUDA_VISIBLE_DEVICES=${GPU_ID} ./tools/demo.py --net=res101 --dataset=pascal_voc
+or
+CUDA_VISIBLE_DEVICES=0 ./tools/demo.py --net=res101 --dataset=pascal_voc
+
+Attention:
+注意测试指定数据所在目录 # im_file = os.path.join(cfg.DATA_DIR, 'demo', image_name)
 ==============================================================================================
 #!/usr/bin/env python
 
@@ -240,6 +245,8 @@ A: cd tf-faster-rcnn/
 # NET in {vgg16, res50, res101, res152} is the network arch to use
 # DATASET {pascal_voc, pascal_voc_0712, coco} is defined in train_faster_rcnn.sh
 
+Attention:
+# 每次采用新的数据集时，记得将data/cache删除
 ==============================================================================================
 
 
