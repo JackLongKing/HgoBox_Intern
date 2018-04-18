@@ -180,9 +180,13 @@ def print_detection(im_file,im, class_name, dets, img_shape,thresh=0.5):
         cv2.putText(im,str(class_name)+":"+str(score),(int(bbox[0]),int(bbox[1]-2)),font,0.45,(255,0,0),1)
         print(("{} detections with p({} | box) >= {:.1f}").format(class_name, class_name,thresh))
 
-        element=bbox
-        element.extend([score])
-        element.extend([class_name])
+        element=[]
+        element.append(int(bbox[0]))
+        element.append(int(bbox[1]))
+        element.append(int(bbox[2]))
+        element.append(int(bbox[3]))
+        element.append(score)
+        element.append(class_name)
         contents.append(element)
         element.clear()
 
@@ -273,6 +277,6 @@ if __name__ == '__main__':
 
     for im_name in im_names:
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-        print('Demo for {}/{}'.format(test_img_path,im_name))
+        print('Demo for {}{}'.format(test_img_path,im_name))
         demo(sess, net, im_name)
 
