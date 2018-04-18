@@ -39,7 +39,8 @@ CLASSES = ('__background__',
 NETS = {'vgg16': ('vgg16_faster_rcnn_iter_70000.ckpt',),'res101': ('res101_faster_rcnn_iter_110000.ckpt',)}
 DATASETS= {'pascal_voc': ('voc_2007_trainval',),'pascal_voc_0712': ('voc_2007_trainval+voc_2012_trainval',)}
 
-test_img_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/result_img/"
+test_img_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/demo/test_imgs//"
+output_img_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/result_img/"
 output_xml_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/result_xml/"
 
 
@@ -191,7 +192,7 @@ def print_detection(im_file,im, class_name, dets, img_shape,thresh=0.5):
         element.clear()
 
     im_file=im_file.split('/')[-1]
-    cv2.imwrite(os.path.join(test_img_path,im_file),im)
+    cv2.imwrite(os.path.join(output_img_path,im_file),im)
 
     xml_write(test_img_path, output_xml_path, im_file,img_shape,contents,with_score=True)
 
