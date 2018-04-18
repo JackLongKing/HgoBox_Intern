@@ -52,11 +52,49 @@ Concat                   78.8
 
 <=============================================================================>
 =====>Title
-LocNet: Improving Localization Accuracy for Object Detection
+Xception: Deep Learning with Depthwise Separable Convolutions 
 =====>Key Points
+使用Depthwise Separable Convolution减少运算量，但是并未减少参数量，原因在于作者
+加宽了网络
+Depthwise Separable Convolutions既减少运算量，也减少参数量
+example:
+设卷积核K大小为Dk*Dk，输入特征图F大小为Df*Df*M,输出特征图G大小为Dg*Dg*N，其中Df=Dg，
+即卷积不改变特征图大小，
+===>standard convolution：
+parameters：M*Dk*Dk*N
+computational cost：Df*Df*Dk*Dk*M*N
+
+===>depthwise separable convolution：
+1.depthwise convolution：
+parameters：M*1*Dk*Dk*1
+computational cost：Df*Df*Dk*Dk*M
+2.pointwise concatenation:
+parameters：M*1*1*N
+computational cost：Df*Df*1*1*M*N
+
+===>comparison：
+parameters:
+standard/depthwise-separable = (M*Dk*Dk*N)/(M*1*Dk*Dk*1+M*1*1*N)
+computational cost：
+standard/depthwise-separable = (Df*Df*Dk*Dk*M*N)/(Df*Df*Dk*Dk*M+Df*Df*1*1*M*N)
+
+<=============================================================================>
 
 
-=====>Result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

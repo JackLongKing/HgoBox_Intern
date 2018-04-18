@@ -1,2 +1,11 @@
 ===>object detection paper & code 
 https://handong1587.github.io/deep_learning/2015/10/09/object-detection.html
+
+===>Keras load/write model
+https://machinelearningmastery.com/save-load-keras-deep-learning-models/
+
+===>Convolution types
+https://zhuanlan.zhihu.com/p/28186857
+
+===>Image stitching
+http://www.cnblogs.com/skyfsm/
