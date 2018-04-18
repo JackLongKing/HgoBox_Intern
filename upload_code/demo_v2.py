@@ -181,8 +181,8 @@ def print_detection(im_file,im, class_name, dets, img_shape,thresh=0.5):
         print(("{} detections with p({} | box) >= {:.1f}").format(class_name, class_name,thresh))
 
         element=bbox
-        element.extend(score)
-        element.extend(class_name)
+        element.extend([score])
+        element.extend([class_name])
         contents.append(element)
         element.clear()
 
