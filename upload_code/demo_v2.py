@@ -196,7 +196,7 @@ def demo(sess, net, image_name):
     """Detect object classes in an image using pre-computed object proposals."""
 
     # Load the demo image
-    im_file = os.path.join(cfg.DATA_DIR, 'demo/test_imgs', image_name)
+    im_file = os.path.join(test_img_path, image_name)
     if not os.path.exists(im_file):
         print("Please check where test images exist!!!!!\n")
     im = cv2.imread(im_file)
