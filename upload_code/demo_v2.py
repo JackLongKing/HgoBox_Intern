@@ -118,7 +118,7 @@ def xml_write(img_path,xml_path,img_file,img_shape,contents,with_score=False):
         if with_score:
             score_node=doc.createElement("score")
             score_node.appendChild(doc.createTextNode(str(element[4])))
-            bndbox_node.appendChild(score_node)
+            object_node.appendChild(score_node)
 
         object_node.appendChild(name_node)
         object_node.appendChild(pose_node)
