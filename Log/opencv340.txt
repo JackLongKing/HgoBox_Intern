@@ -1,0 +1,25 @@
+===>1.Build issue error: ‘__builtin_isnan’ is not a member of ‘std’
+# =================================================================================================
+solution:
+
+This issue was very similar to this one: voidlinux/void-packages#7324 (comment)
+I have changed c++config.h and built it without errors.
+
+--- /usr/include/x86_64-linux-gnu/c++/5/bits/c++config.h.bak	2017-11-07 00:53:02.751217575 +0100
++++ /usr/include/x86_64-linux-gnu/c++/5/bits/c++config.h	2017-11-07 01:31:04.506126867 +0100
+@@ -1343,7 +1343,7 @@
+ 
+ /* Define if C99 functions or macros in <math.h> should be imported in <cmath>
+    in namespace std. */
+-/* #undef _GLIBCXX_USE_C99_MATH */
++#define _GLIBCXX_USE_C99_MATH 1
+ 
+ /* Define if C99 functions or macros in <math.h> should be imported in
+    <tr1/cmath> in namespace std::tr1. */
+
+# =================================================================================================
+
+
+
+
+
