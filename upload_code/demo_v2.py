@@ -39,9 +39,14 @@ CLASSES = ('__background__',
 NETS = {'vgg16': ('vgg16_faster_rcnn_iter_70000.ckpt',),'res101': ('res101_faster_rcnn_iter_110000.ckpt',)}
 DATASETS= {'pascal_voc': ('voc_2007_trainval',),'pascal_voc_0712': ('voc_2007_trainval+voc_2012_trainval',)}
 
-test_img_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/demo/test_imgs//"
+test_img_path="/home/hgobox_wh/proj/tf-faster-rcnn/test_imgs/"
 output_img_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/result_img/"
 output_xml_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/result_xml/"
+
+WRITE_XML=True
+WRITE_IMG=True
+WRITE_JSON=True
+
 
 
 
@@ -52,7 +57,7 @@ def xml_write(img_path,xml_path,img_file,img_shape,contents,with_score=False):
     assert len(img_shape) == 3
 
     doc=xml.dom.minidom.Document()
-    root=doc.createElement("annotations")
+    root=doc.createElement("annotation")
     doc.appendChild(root)
 
     folder_node=doc.createElement("folder")
@@ -130,8 +135,8 @@ def xml_write(img_path,xml_path,img_file,img_shape,contents,with_score=False):
 
     xml_file=img_file.split(".jpg")[0]+".xml"
     dst_file=os.path.join(xml_path,xml_file)
-    xml_writer=open(dst_file,'w',encoding="utf-8")
-    doc.writexml(xml_writer,indent='\t',addindent="    ",newl='\n',encoding="utf-8")
+    xml_writer=open(dst_file,'w')
+    doc.writexml(xml_writer,indent='\t',addindent="    ",newl='\n')
 
 
 def vis_detections(im, class_name, dets, thresh=0.5):
@@ -189,19 +194,20 @@ def print_detection(im_file,im, class_name, dets, img_shape,thresh=0.5):
         element.append(score)
         element.append(class_name)
         contents.append(element)
-        element.clear()
 
     im_file=im_file.split('/')[-1]
-    cv2.imwrite(os.path.join(output_img_path,im_file),im)
-
-    xml_write(test_img_path, output_xml_path, im_file,img_shape,contents,with_score=True)
+	if WRITE_IMG:
+        cv2.imwrite(os.path.join(output_img_path,im_file),im)
+	
+	if WRITE_XML:
+        xml_write(test_img_path, output_xml_path, im_file,img_shape,contents,with_score=False)
 
 
 def demo(sess, net, image_name):
     """Detect object classes in an image using pre-computed object proposals."""
 
     # Load the demo image
-    im_file = os.path.join(test_img_path, image_name)
+    im_file = os.path.join(cfg.DATA_DIR, 'demo/test_imgs', image_name)
     if not os.path.exists(im_file):
         print("Please check where test images exist!!!!!\n")
     im = cv2.imread(im_file)
@@ -234,7 +240,7 @@ def parse_args():
     parser.add_argument('--net', dest='demo_net', help='Network to use [vgg16 res101]',
                         choices=NETS.keys(), default='res101')
     parser.add_argument('--dataset', dest='dataset', help='Trained dataset [pascal_voc pascal_voc_0712]',
-                        choices=DATASETS.keys(), default='pascal_voc_0712')
+                        choices=DATASETS.keys(), default='pascal_voc')
     args = parser.parse_args()
 
     return args
@@ -272,6 +278,7 @@ if __name__ == '__main__':
     saver = tf.train.Saver()
     saver.restore(sess, tfmodel)
     print('Loaded network {:s}'.format(tfmodel))
+    start_time=cv2.getTickCount()
     im_names=[]
     for temp_file in os.listdir(test_img_path):
         im_names.append(temp_file)
@@ -280,4 +287,9 @@ if __name__ == '__main__':
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         print('Demo for {}{}'.format(test_img_path,im_name))
         demo(sess, net, im_name)
+
+    total_time=(cv2.getTickCount()-start_time)/float(cv2.getTickFrequency())
+    num_test_img=len(im_names)
+    time_per_img=float(total_time)/num_test_img
+    print("per image costs %f s in average!" % time_per_img)
 
