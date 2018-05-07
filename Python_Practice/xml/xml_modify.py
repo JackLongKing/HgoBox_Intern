@@ -40,8 +40,9 @@ def modify(all_files):
 #     get_file_name_list(xml_path)
 # test()
 
-xml_path=""
+xml_path=r"E:\Work\Data\labeled_data\xml"
 all_files=get_file_name_list(xml_path)
+print(len(all_files))
 modify(all_files)
 
 
