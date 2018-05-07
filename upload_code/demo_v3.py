@@ -39,15 +39,14 @@ CLASSES = ('__background__',
 NETS = {'vgg16': ('vgg16_faster_rcnn_iter_70000.ckpt',),'res101': ('res101_faster_rcnn_iter_110000.ckpt',)}
 DATASETS= {'pascal_voc': ('voc_2007_trainval',),'pascal_voc_0712': ('voc_2007_trainval+voc_2012_trainval',)}
 
-test_img_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/test_imgs/"
-output_img_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/result_img/"
-output_xml_path="/home/hgobox_wh/proj/tf-faster-rcnn/data/result_xml/"
+test_img_path="/home/gulong/project/tf-faster-rcnn/data/test_imgs/"
+output_img_path="/home/gulong/project/tf-faster-rcnn/data/result_img/"
+output_xml_path="/home/gulong/project/tf-faster-rcnn/data/result_xml/"
 
-WRITE_XML=False
+WRITE_XML=True
 WRITE_IMG=True
-WRITE_JSON=True
-
-
+WRITE_JSON=False
+TEST_IMAGE_DIR_HAS_SUB_DIR=True
 
 
 def xml_write(img_path,xml_path,img_file,img_shape,contents,with_score=False):
@@ -57,7 +56,7 @@ def xml_write(img_path,xml_path,img_file,img_shape,contents,with_score=False):
     assert len(img_shape) == 3
 
     doc=xml.dom.minidom.Document()
-    root=doc.createElement("annotation")
+    root=doc.createElement("annotations")
     doc.appendChild(root)
 
     folder_node=doc.createElement("folder")
@@ -136,7 +135,7 @@ def xml_write(img_path,xml_path,img_file,img_shape,contents,with_score=False):
     xml_file=img_file.split(".jpg")[0]+".xml"
     dst_file=os.path.join(xml_path,xml_file)
     xml_writer=open(dst_file,'w')
-    doc.writexml(xml_writer,indent='\t',addindent="    ",newl='\n')
+    doc.writexml(xml_writer,indent='\t',addindent="    ",newl='\n',encoding="utf-8")
 
 
 def vis_detections(im, class_name, dets, thresh=0.5):
@@ -171,11 +170,11 @@ def vis_detections(im, class_name, dets, thresh=0.5):
     plt.tight_layout()
     plt.draw()
 
-def print_detection(im_file,im, class_name, dets, img_shape,thresh=0.5):
+def print_detection(im_file,im, class_name, dets,thresh=0.5):
     """Draw detected bounding boxes."""
     inds = np.where(dets[:, -1] >= thresh)[0]
     if len(inds) == 0:
-        return
+        return None
     contents=[]
     for i in inds:
         bbox = dets[i, :4]
@@ -196,18 +195,16 @@ def print_detection(im_file,im, class_name, dets, img_shape,thresh=0.5):
         contents.append(element)
 
     im_file=im_file.split('/')[-1]
-	if WRITE_IMG:
+    if WRITE_IMG:
         cv2.imwrite(os.path.join(output_img_path,im_file),im)
-	
-	if WRITE_XML:
-        xml_write(test_img_path, output_xml_path, im_file,img_shape,contents,with_score=False)
-
+    if WRITE_XML:
+        return contents
 
 def demo(sess, net, image_name):
     """Detect object classes in an image using pre-computed object proposals."""
 
     # Load the demo image
-    im_file = os.path.join(cfg.DATA_DIR, 'demo/test_imgs', image_name)
+    im_file = os.path.join(test_img_path, image_name)
     if not os.path.exists(im_file):
         print("Please check where test images exist!!!!!\n")
     im = cv2.imread(im_file)
@@ -223,6 +220,7 @@ def demo(sess, net, image_name):
     # Visualize detections for each class
     CONF_THRESH = 0.8
     NMS_THRESH = 0.3
+    all_contents=[]
     for cls_ind, cls in enumerate(CLASSES[1:]):
         cls_ind += 1 # because we skipped background
         cls_boxes = boxes[:, 4*cls_ind:4*(cls_ind + 1)]
@@ -232,7 +230,12 @@ def demo(sess, net, image_name):
         keep = nms(dets, NMS_THRESH)
         dets = dets[keep, :]
         # vis_detections(im, cls, dets, thresh=CONF_THRESH)
-        print_detection(im_file,im,cls,dets,shape,thresh=CONF_THRESH)
+        contents=print_detection(im_file,im,cls,dets,thresh=CONF_THRESH)
+        if contents is not None:
+            all_contents.extend(contents)
+    if len(all_contents) != 0:
+        im_file = im_file.split('/')[-1]
+        xml_write(test_img_path, output_xml_path, im_file, shape, all_contents, with_score=False)
 
 def parse_args():
     """Parse input arguments."""
@@ -253,7 +256,7 @@ if __name__ == '__main__':
     demonet = args.demo_net
     dataset = args.dataset
     tfmodel = os.path.join('output', demonet, DATASETS[dataset][0], 'default',
-                              'res101_faster_rcnn_iter_50000.ckpt')
+                              'res101_faster_rcnn_iter_160000.ckpt')
 
 
     if not os.path.isfile(tfmodel + '.meta'):
@@ -278,7 +281,6 @@ if __name__ == '__main__':
     saver = tf.train.Saver()
     saver.restore(sess, tfmodel)
     print('Loaded network {:s}'.format(tfmodel))
-    start_time=cv2.getTickCount()
     im_names=[]
     for temp_file in os.listdir(test_img_path):
         im_names.append(temp_file)
@@ -287,9 +289,4 @@ if __name__ == '__main__':
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         print('Demo for {}{}'.format(test_img_path,im_name))
         demo(sess, net, im_name)
-
-    total_time=(cv2.getTickCount()-start_time)/float(cv2.getTickFrequency())
-    num_test_img=len(im_names)
-    time_per_img=float(total_time)/num_test_img
-    print("per image costs %f s in average!" % time_per_img)
 
