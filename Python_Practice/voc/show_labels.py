@@ -25,16 +25,16 @@ def test_gray2color(test_png):
     gray_array = np.array(gray_image)
 
     plt.figure()
-    plt.subplot(211)
+    # plt.subplot(211)
     plt.imshow(gray_array, cmap='gray')
 
     # jet_map = np.loadtxt('E:\\Development\\Thermal\\ColorMaps\\jet_int.txt', dtype=np.int)
-    jet_map=labelcolormap(5)
-    color_jet = gray2color(gray_array, jet_map)
-    plt.subplot(212)
-    plt.imshow(color_jet)
+    # jet_map=labelcolormap(8)
+    # color_jet = gray2color(gray_array, jet_map)
+    # plt.subplot(212)
+    # plt.imshow(color_jet)
     plt.savefig(test_png.split(".png")[0]+"_res"+".png")
-    plt.show()
+    # plt.show()
 
     return
 
